@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Task::class, 'assigned_to_id');
     }
+
+    public function statistics()
+    {
+        return $this->hasOne(Statistics::class);
+    }
 }

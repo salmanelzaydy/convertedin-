@@ -11,6 +11,18 @@ class Task extends Model
 
     protected $fillable = ['title', 'description', 'assigned_to_id', 'assigned_by_id'];
 
+    protected static function booted()
+{
+    static::created(function ($task) {
+        $task->assignedTo->statistics->increment('task_count');
+        $task->assignedBy->statistics->increment('task_count');
+    });
+
+    static::updated(function ($task) {
+        // If you want to handle updates to the task count.
+    });
+}
+
     // Relationship with the user assigned to the task
     public function assignedTo()
     {

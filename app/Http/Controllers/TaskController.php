@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Models\User;
+use App\Models\Statistics;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
@@ -54,8 +55,8 @@ class TaskController extends Controller
 
     public function statistics()
     {
-        $topUsers = User::withCount('assignedTasks')
-            ->orderBy('assigned_tasks_count', 'desc')
+        $topUsers = Statistics::with('user')
+            ->orderByDesc('task_count')
             ->limit(10)
             ->get();
 
